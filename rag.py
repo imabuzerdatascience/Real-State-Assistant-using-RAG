@@ -45,13 +45,13 @@ def process_url(urls) :
   vector_store.reset_collection()
 
   # chunkers 
-  text_splitters = RecursiveCharacterTextSplitter(
-    chunk_size = 100 ,
-    seperators = ["/n/n" , "/n", "." , "," , "?" , "&"] ,
-    chunk_overlap = 50
-  )
+  text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=100,
+    separators=["\n\n", "\n", ".", ",", "?", "&"],
+    chunk_overlap=50
+)
 
-  docs = text_splitters.split_documents(data)
+  docs = text_splitter.split_documents(data)
 
   uuids = [str(uuid4()) for _ in range(len(docs))] 
   vector_store.add_documents(docs , ids = uuids)
