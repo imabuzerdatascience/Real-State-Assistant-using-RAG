@@ -43,12 +43,12 @@ def intialize_components():
 def process_url(urls):
 
   
-    yield "Initializing LLM and Vector Database..."
+    # yield "Initializing LLM and Vector Database..."
 
     intialize_components()
     vector_store.reset_collection()
 
-    yield "Loading URLs..."
+    # yield "Loading URLs..."
 
     loader = UnstructuredURLLoader(urls=urls)
     data = loader.load()
@@ -65,16 +65,16 @@ def process_url(urls):
         separators=["\n\n", "\n", ".", ",", "?", "&"]
     )
 
-    yield "Splitting documents into chunks..."
+    # yield "Splitting documents into chunks..."
 
     docs = text_splitter.split_documents(data)
 
-    yield f"Creating embeddings for {len(docs)} chunks..."
+    # yield f"Creating embeddings for {len(docs)} chunks..."
 
     uuids = [str(uuid4()) for _ in range(len(docs))]
     vector_store.add_documents(docs, ids=uuids)
 
-    yield "Embeddings stored in Vector Database successfully."
+    # yield "Embeddings stored in Vector Database successfully."
 
 
 def genrate_answer(query):
@@ -97,8 +97,8 @@ if __name__ == "__main__" :
     ]
 
    
-  for status in process_url(urls):
-    print(status)
+  process_url(urls)
+    
 
   
   answer , sources = genrate_answer("Tell me what was the 30 year fixed mortagate rate along with the date?")
